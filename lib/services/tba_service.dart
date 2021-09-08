@@ -11,19 +11,19 @@ class TheBlueAllainceApi {
   Future<List<TeamData>> getOprs(String event) async {
     List<TeamData> _returnData = [];
     var url = Uri.https(_base_uri, "/api/v3/event/$event/oprs");
-    var response = await http.get(url, headers: _header);
-    if (response.statusCode - 200 < 100) {
-      // var jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
-      final eventData =
-          new Map<String, dynamic>.from(json.decode(response.body));
-      final oprs = eventData['oprs'].entries;
-      for (final item in oprs) {
-        _returnData.add(TeamData.fromJson(item));
+    try {
+      var response = await http.get(url, headers: _header);
+      if (response.statusCode - 200 < 100) {
+        final eventData =
+            new Map<String, dynamic>.from(json.decode(response.body));
+        final oprs = eventData['oprs'].entries;
+        for (final item in oprs) {
+          _returnData.add(TeamData.fromJson(item));
+        }
       }
-
-      // print(jsonResponse);
+      return _returnData;
+    } catch (e) {
+      return [];
     }
-    // print(_returnData);
-    return _returnData;
   }
 }

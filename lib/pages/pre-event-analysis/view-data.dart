@@ -12,12 +12,19 @@ class ViewData extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(eventCode)),
-      body: ListView.builder(
-        itemBuilder: ((context, index) => OprDataCard(
-              data: data[index],
-            )),
-        itemCount: data.length,
-      ),
+      body: data.length > 0
+          ? ListView.builder(
+              itemBuilder: ((context, index) => OprDataCard(
+                    data: data[index],
+                  )),
+              itemCount: data.length,
+            )
+          : Center(
+              child: Text(
+                'Event Code is invalid',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+              ),
+            ),
     );
   }
 }
